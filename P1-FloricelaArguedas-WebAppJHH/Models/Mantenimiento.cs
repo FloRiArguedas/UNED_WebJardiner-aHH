@@ -29,5 +29,7 @@
         public int CostoProductoM2 { get; set; }
 
         public string EstadoManteniemiento { get; set; }
+
+        public int CostoLineal {  get; set; }
     }
 }

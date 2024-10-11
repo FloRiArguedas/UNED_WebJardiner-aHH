@@ -7,4 +7,8 @@
     <RootNamespace>P1_FloricelaArguedas_WebAppJHH</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
+  </ItemGroup>
+
 </Project>
