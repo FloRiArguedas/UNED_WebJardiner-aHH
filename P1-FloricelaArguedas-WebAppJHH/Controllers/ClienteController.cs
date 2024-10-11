@@ -32,6 +32,11 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: ClienteController/Details/5
         public ActionResult Details(int id)
         {
+            if (listadeClientes.Any())
+            {
+                Cliente clienteALeer = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
+                return View(clienteALeer);
+            }
             return View();
         }
 
@@ -103,17 +108,31 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: ClienteController/Delete/5
         public ActionResult Delete(int id)
         {
+            if (listadeClientes.Any())
+            {
+                Cliente clienteAEliminar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
+                return View(clienteAEliminar);
+            }
             return View();
         }
 
         // POST: ClienteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Cliente clienteAEliminar)
         {
             try
             {
+                if (clienteAEliminar == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    listadeClientes.RemoveAt(clienteAEliminar.Id-1);
+                }
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
