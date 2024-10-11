@@ -40,6 +40,31 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View();
         }
 
+
+        // GET: ClienteController/Search
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        // POST: ClienteController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(int id)
+        {
+            if (listadeClientes.Any()) { // SI CONTIENE AL MENOS UN ELEMENTO (SI ES TRUE)
+                Cliente clienteAbuscar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
+                if (clienteAbuscar == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else {
+                    return View(clienteAbuscar);
+                }
+            }
+            return View();
+        }
+
         // GET: ClienteController/Create
         public ActionResult Create()
         {
@@ -129,7 +154,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                 }
                 else
                 {
-                    listadeClientes.RemoveAt(clienteAEliminar.Id-1);
+                    listadeClientes.RemoveAt(clienteAEliminar.Id-1); //ARREGLAR
                 }
                 return RedirectToAction(nameof(Index));
 
