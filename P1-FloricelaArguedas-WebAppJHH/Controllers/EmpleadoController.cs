@@ -37,6 +37,34 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                 return View();
         }
 
+        // GET: EmpleadoController/Search (BUSCAR)
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        // POST: EmpleadoController/Search 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(int cedula)
+        {
+            try
+            {
+                if (ListadeEmpleados.Any())
+                {
+                    Empleado EmpleadoEncontrado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == cedula);
+                    return View(EmpleadoEncontrado);
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
         // GET: EmpleadoController/Create
         public ActionResult Create()
         {
