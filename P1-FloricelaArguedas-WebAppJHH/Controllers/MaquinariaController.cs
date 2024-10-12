@@ -74,10 +74,18 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: MaquinariaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Maquinaria maquinariaNueva)
         {
             try
             {
+                if (maquinariaNueva == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    listadeMaquinaria.Add(maquinariaNueva);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
