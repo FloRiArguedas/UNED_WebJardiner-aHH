@@ -27,10 +27,14 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View(ListadeEmpleados);
         }
 
-        // GET: EmpleadoController/Details/5
-        public ActionResult Details(int id)
+        // GET: EmpleadoController/Detalles (LEER)
+        public ActionResult Details(int ced)
         {
-            return View();
+            if (ListadeEmpleados.Any()) { 
+                Empleado EmpleadoALeer = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
+                return View(EmpleadoALeer);
+            }
+                return View();
         }
 
         // GET: EmpleadoController/Create
@@ -42,10 +46,17 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: EmpleadoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Empleado EmpleadoNuevo)
         {
             try
             {
+                if (EmpleadoNuevo == null)
+                {
+                    return View();
+                }
+                else { 
+                    ListadeEmpleados.Add(EmpleadoNuevo);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
