@@ -8,6 +8,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
     public class ClienteController : Controller
     {
         public static IList<Cliente> listadeClientes = new List<Cliente>();
+      
         // GET: ClienteController
         public ActionResult Index()
         {
@@ -29,7 +30,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View(listadeClientes);
         }
 
-        // GET: ClienteController/Details/5
+        // GET: ClienteController/Details/
         public ActionResult Details(int id)
         {
             if (listadeClientes.Any())
@@ -47,7 +48,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View();
         }
 
-        // POST: ClienteController/Create
+        // POST: ClienteController/Search
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Search(int id)
@@ -93,7 +94,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             }
         }
 
-        // GET: ClienteController/Edit/5
+        // GET: ClienteController/Edit/
         public ActionResult Edit(int id)
         {
             if (listadeClientes.Any()) {
@@ -104,7 +105,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
 
         }
 
-        // POST: ClienteController/Edit/5
+        // POST: ClienteController/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Editar(Cliente clienteEditado)
@@ -130,7 +131,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             }
         }
 
-        // GET: ClienteController/Delete/5
+        // GET: ClienteController/Delete/
         public ActionResult Delete(int id)
         {
             if (listadeClientes.Any())
@@ -141,7 +142,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View();
         }
 
-        // POST: ClienteController/Delete/5
+        // POST: ClienteController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Cliente clienteAEliminar)
@@ -154,7 +155,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                 }
                 else
                 {
-                    listadeClientes.RemoveAt(clienteAEliminar.Id-1); //ARREGLAR
+                    listadeClientes.RemoveAt(clienteAEliminar.Id-1); //ARREGLAR ESTOOOO
                 }
                 return RedirectToAction(nameof(Index));
 

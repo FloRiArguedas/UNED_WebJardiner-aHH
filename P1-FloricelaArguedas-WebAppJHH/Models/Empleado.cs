@@ -3,9 +3,9 @@
     public class Empleado
     {
         public int Cedula { get; set; }
-        public DateOnly FechaNacimiento { get; set; }
+        public DateTime FechaNacimiento { get; set; }
         public string Lateralidad { get; set; }
-        public DateOnly FechaIngreso { get; set; }
+        public DateTime FechaIngreso { get; set; }
         public int SalarioxHora { get; set; }
     }
 }
