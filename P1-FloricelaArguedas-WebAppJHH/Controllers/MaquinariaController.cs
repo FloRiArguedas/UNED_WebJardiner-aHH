@@ -23,8 +23,6 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                     HorasMantenimiento = 100
                 };
                 listadeMaquinaria.Add(maquinaria);
-                
-
             }
             return View(listadeMaquinaria);
         }
@@ -32,6 +30,11 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MaquinariaController/Details/5
         public ActionResult Details(int id)
         {
+            if (listadeMaquinaria.Any()) {
+                Maquinaria MaquinariaALeer = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
+                return View(MaquinariaALeer);
+
+            }
             return View();
         }
 
