@@ -99,21 +99,38 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             }
         }
 
-        // GET: EmpleadoController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: EmpleadoController/Delete/
+        public ActionResult Delete(int ced)
         {
+            if (ListadeEmpleados.Any())
+            {
+                Empleado EmpleadoAEliminar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
+                return View(EmpleadoAEliminar);
+            }
             return View();
         }
 
-        // POST: EmpleadoController/Delete/5
+        // POST: EmpleadoController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Empleado EmpleadoEliminar)
         {
             try
             {
+                Empleado EliminarEsteEmpleado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == EmpleadoEliminar.Cedula);
+
+                if (EliminarEsteEmpleado != null)
+                {
+                    ListadeEmpleados.Remove(EliminarEsteEmpleado);
+                }
+                else {
+
+                    return View();
+                }
+                
                 return RedirectToAction(nameof(Index));
-            }
+                
+                }
             catch
             {
                 return View();

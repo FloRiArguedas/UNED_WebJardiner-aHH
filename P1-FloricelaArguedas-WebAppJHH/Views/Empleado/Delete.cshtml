@@ -1,0 +1,52 @@
+﻿@model P1_FloricelaArguedas_WebAppJHH.Models.Empleado
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminación de Empleados</h1>
+
+<h3>¿Está seguro que desea eliminar este registro?</h3>
+<div>
+    <h4>Empleado</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cedula)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cedula)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lateralidad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lateralidad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaIngreso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalarioxHora)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalarioxHora)
+        </dd>
+
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="ELIMINAR" class="btn btn-danger" /> |
+        <input type="hidden" name="Cedula" value="@Model.Cedula" />
+        <a asp-action="Index">Regresar</a>
+    </form>
+</div>
