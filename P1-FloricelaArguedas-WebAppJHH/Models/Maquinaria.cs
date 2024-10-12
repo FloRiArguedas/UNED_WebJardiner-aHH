@@ -7,10 +7,10 @@
 
         public string Tipo { get; set; }
 
-        public TimeSpan HorasUsoActual { get; set; }
+        public int HorasUsoActual { get; set; }
 
-        public TimeSpan HorasUsoMaximo { get; set; }
+        public int HorasUsoMaximo { get; set; }
 
-        public TimeSpan HorasMantenimiento { get; set; }
+        public int HorasMantenimiento { get; set; }
     }
 }

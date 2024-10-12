@@ -1,0 +1,65 @@
+﻿@model IEnumerable<P1_FloricelaArguedas_WebAppJHH.Models.Maquinaria>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>MAQUINARIA</h1>
+
+<p>
+    <a asp-action="Create">Crear nueva Maquinaria</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorasUsoActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorasUsoMaximo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorasMantenimiento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasUsoActual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasUsoMaximo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasMantenimiento)
+            </td>
+            <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
