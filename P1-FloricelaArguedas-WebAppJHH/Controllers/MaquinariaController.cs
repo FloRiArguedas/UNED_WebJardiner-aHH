@@ -38,6 +38,33 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View();
         }
 
+        // GET: MaquinariaController/Search
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        // POST: ClienteController/Search
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(int id)
+        {
+            if (listadeMaquinaria.Any())
+            { 
+                Maquinaria MaquinariaABuscar = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
+                if (MaquinariaABuscar == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View(MaquinariaABuscar);
+                }
+            }
+            return View();
+        }
+
+
         // GET: MaquinariaController/Create
         public ActionResult Create()
         {

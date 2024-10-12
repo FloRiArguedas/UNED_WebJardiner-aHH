@@ -1,0 +1,67 @@
+﻿@model P1_FloricelaArguedas_WebAppJHH.Models.Maquinaria
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Buscar</h1>
+
+<form asp-action="Search">
+
+    <div class="form-group">
+        <label asp-for="Id" class="control-label">Escriba el ID de la maquinaria a buscar:</label>
+        <input asp-for="Id" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Buscar Maquinaria" class="btn btn-success" />
+    </div>
+
+</form>
+
+
+<div>
+    <h4>Maquinaria</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HorasUsoActual)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HorasUsoActual)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HorasUsoMaximo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HorasUsoMaximo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HorasMantenimiento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HorasMantenimiento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
