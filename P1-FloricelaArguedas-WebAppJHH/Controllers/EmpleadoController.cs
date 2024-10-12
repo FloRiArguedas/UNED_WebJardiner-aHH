@@ -65,19 +65,32 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             }
         }
 
-        // GET: EmpleadoController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: EmpleadoController/Editar UPDATE
+        public ActionResult Edit(int ced)
         {
+            if (ListadeEmpleados.Any())
+            {
+                Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
+                return View(EmpleadoAEditar);
+            }
             return View();
         }
 
-        // POST: EmpleadoController/Edit/5
+        // POST: EmpleadoController/Editar UPDATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Empleado EmpleadoActualizado)
         {
             try
             {
+                if (ListadeEmpleados.Any()) { 
+                
+                    Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == EmpleadoActualizado.Cedula);
+                    EmpleadoAEditar.FechaNacimiento = EmpleadoActualizado.FechaNacimiento;
+                    EmpleadoAEditar.Lateralidad = EmpleadoActualizado.Lateralidad;
+                    EmpleadoAEditar.FechaIngreso = EmpleadoActualizado.FechaIngreso;
+                    EmpleadoAEditar.SalarioxHora = EmpleadoActualizado.SalarioxHora;
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.SalarioxHora)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Editar", "Edit", new { ced = item.Cedula }) |
                 @Html.ActionLink("Detalles", "Details", new { ced=item.Cedula }) |
                 @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
