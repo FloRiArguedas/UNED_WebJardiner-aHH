@@ -133,16 +133,29 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MaquinariaController/Delete/5
         public ActionResult Delete(int id)
         {
+            if (listadeMaquinaria.Any())
+            {
+                Maquinaria MaquinariaEliminar = listadeMaquinaria.FirstOrDefault(Maquinaria => Maquinaria.Id == id);
+                return View(MaquinariaEliminar);
+            }
             return View();
         }
 
         // POST: MaquinariaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Maquinaria MaquinariaAEliminar)
         {
             try
             {
+                Maquinaria EliminarEstaMaquinaria = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == MaquinariaAEliminar.Id);
+                if (EliminarEstaMaquinaria == null)
+                {
+                    return View();
+                }
+                else { 
+                    listadeMaquinaria.Remove(EliminarEstaMaquinaria);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

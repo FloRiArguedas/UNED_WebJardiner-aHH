@@ -155,7 +155,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                 }
                 else
                 {
-                    listadeClientes.RemoveAt(clienteAEliminar.Id-1); //ARREGLAR ESTOOOO
+                    listadeClientes.Remove(clienteAEliminar);
                 }
                 return RedirectToAction(nameof(Index));
 
