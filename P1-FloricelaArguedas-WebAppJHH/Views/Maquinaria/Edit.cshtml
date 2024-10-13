@@ -1,0 +1,65 @@
+﻿@model P1_FloricelaArguedas_WebAppJHH.Models.Maquinaria
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Maquinaria</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" class="form-control">
+                    <option value="Shindaiwa">Shindaiwa</option>
+                    <option value="Corta Setos">Corta Setos</option>
+                    <option value="MotoSierra">MotoSierra</option>
+                    <option value="Rastrillo">Rastrillo</option>
+                    <option value="Carretillo">Carretillo</option>
+                    <option value="Otros">Otros</option>
+                </select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorasUsoActual" class="control-label"></label>
+                <input asp-for="HorasUsoActual" class="form-control" />
+                <span asp-validation-for="HorasUsoActual" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorasUsoMaximo" class="control-label"></label>
+                <input asp-for="HorasUsoMaximo" class="form-control" />
+                <span asp-validation-for="HorasUsoMaximo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorasMantenimiento" class="control-label"></label>
+                <input asp-for="HorasMantenimiento" class="form-control" />
+                <span asp-validation-for="HorasMantenimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

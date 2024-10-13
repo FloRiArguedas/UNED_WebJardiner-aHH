@@ -97,17 +97,32 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MaquinariaController/Edit/5
         public ActionResult Edit(int id)
         {
+            if (listadeMaquinaria.Any()) 
+            {
+                Maquinaria MaquinariaEditar = listadeMaquinaria.FirstOrDefault(Maquinaria => Maquinaria.Id == id);
+                return View(MaquinariaEditar); 
+            }
             return View();
         }
 
         // POST: MaquinariaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Maquinaria MaquinariaEditada)
         {
             try
             {
+                if (listadeMaquinaria.Any()) 
+                {
+                    Maquinaria maquinariaAEditar = listadeMaquinaria.FirstOrDefault(maquinaria=>maquinaria.Id == MaquinariaEditada.Id);
+                    maquinariaAEditar.Descripcion = MaquinariaEditada.Descripcion;
+                    maquinariaAEditar.Tipo = MaquinariaEditada.Tipo;
+                    maquinariaAEditar.HorasUsoActual = MaquinariaEditada.HorasUsoActual;
+                    maquinariaAEditar.HorasUsoMaximo = MaquinariaEditada.HorasUsoMaximo;
+                    maquinariaAEditar.HorasMantenimiento = MaquinariaEditada.HorasMantenimiento;
+                }
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
