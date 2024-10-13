@@ -1,0 +1,126 @@
+﻿@model IEnumerable<P1_FloricelaArguedas_WebAppJHH.Models.Mantenimiento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-warning">
+        @ViewBag.Mensaje
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMantenimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaEjecutado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAgendado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2Propiedad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.m2CercaViva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoMantenimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasSinChapia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaSiguienteChapia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoZacate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductoAplicado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoProductoAplicado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoChapiaM2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoProductoM2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoTotalMantenimiento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMantenimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaEjecutado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAgendado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.m2Propiedad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.m2CercaViva)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoMantenimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiasSinChapia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaSiguienteChapia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoZacate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductoAplicado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoProductoAplicado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoChapiaM2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoProductoM2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoTotalMantenimiento)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

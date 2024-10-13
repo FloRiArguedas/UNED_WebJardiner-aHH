@@ -1,0 +1,120 @@
+﻿@model P1_FloricelaArguedas_WebAppJHH.Models.Mantenimiento
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Mantenimiento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdMantenimiento" class="control-label"></label>
+                <input asp-for="IdMantenimiento" class="form-control" />
+                <span asp-validation-for="IdMantenimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCliente" class="control-label"></label>
+                <input asp-for="IdCliente" class="form-control" />
+                <span asp-validation-for="IdCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaEjecutado" class="control-label"></label>
+                <input asp-for="FechaEjecutado" class="form-control" />
+                <span asp-validation-for="FechaEjecutado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaAgendado" class="control-label"></label>
+                <input asp-for="FechaAgendado" class="form-control" />
+                <span asp-validation-for="FechaAgendado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="m2Propiedad" class="control-label"></label>
+                <input asp-for="m2Propiedad" class="form-control" />
+                <span asp-validation-for="m2Propiedad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="m2CercaViva" class="control-label"></label>
+                <input asp-for="m2CercaViva" class="form-control" />
+                <span asp-validation-for="m2CercaViva" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstadoMantenimiento" class="control-label"></label>
+                <select asp-for="EstadoMantenimiento" class="form-control">
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Facturado">Facturado</option>
+                    <option value="Agendado">Agendado</option>
+                </select>
+                <span asp-validation-for="EstadoMantenimiento" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                <label asp-for="DiasSinChapia" class="control-label"></label>
+                <input asp-for="DiasSinChapia" class="form-control" />
+                <span asp-validation-for="DiasSinChapia" class="text-danger"></span>
+            </div> *@
+           @*  <div class="form-group">
+                <label asp-for="FechaSiguienteChapia" class="control-label"></label>
+                <input asp-for="FechaSiguienteChapia" class="form-control" />
+                <span asp-validation-for="FechaSiguienteChapia" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="TipoZacate" class="control-label"></label>
+                <select asp-for="TipoZacate" class="form-control">
+                    <option value="San Agustin">San Agustin</option>
+                    <option value="Toro">Toro</option>
+                    <option value="Dulce">Dulce</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <span asp-validation-for="TipoZacate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductoAplicado" class="control-label"></label>
+                <select asp-for="ProductoAplicado" class="form-control">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+                <span asp-validation-for="ProductoAplicado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoProductoAplicado" class="control-label"></label>
+                <select asp-for="TipoProductoAplicado" class="form-control">
+                    <option value="Random">Random</option>
+                    <option value="Coyolillo">Coyolillo</option>
+                    <option value="Hoja Ancha">Hoja Ancha</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <span asp-validation-for="TipoProductoAplicado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostoChapiaM2" class="control-label"></label>
+                <input asp-for="CostoChapiaM2" class="form-control" />
+                <span asp-validation-for="CostoChapiaM2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostoProductoM2" class="control-label"></label>
+                <input asp-for="CostoProductoM2" class="form-control" />
+                <span asp-validation-for="CostoProductoM2" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                <label asp-for="CostoTotalMantenimiento" class="control-label"></label>
+                <input asp-for="CostoTotalMantenimiento" class="form-control" />
+                <span asp-validation-for="CostoTotalMantenimiento" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
