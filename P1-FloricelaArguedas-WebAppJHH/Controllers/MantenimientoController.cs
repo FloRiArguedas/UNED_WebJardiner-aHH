@@ -21,6 +21,11 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MantenimientoController/Details/5
         public ActionResult Details(int id)
         {
+            if (listadeMantenimientos.Any())
+            {
+                Mantenimiento MantenimientoALeer = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == id);
+                return View(MantenimientoALeer);
+            }
             return View();
         }
 
