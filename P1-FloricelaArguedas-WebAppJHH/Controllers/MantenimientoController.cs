@@ -29,6 +29,34 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View();
         }
 
+        // GET: MantenimientoController/Search BUSCAR
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        // POST: MantenimientoController/Search
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(int IdMantenimiento)
+        {
+            try
+            {
+                if (listadeMantenimientos.Any())
+                {
+                    Mantenimiento MantenimientoEncontrado = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == IdMantenimiento);
+                    return View(MantenimientoEncontrado);
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         // GET: MantenimientoController/Create
         public ActionResult Create()
         {
@@ -54,29 +82,30 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             if (ListaClientes.Any())
             {
                 ClienteMantenimiento = ListaClientes.FirstOrDefault(cliente => cliente.Id == MantenimientoNuevo.IdCliente);
-            }
-            //VERANO
-            DateTime FechaActual = DateTime.Now;
-            if (FechaActual.Month == 12 || FechaActual.Month <= 4)
-            {
-                if (ClienteMantenimiento.MantenimientoVerano == "Quincenal")
+                //VERANO
+                DateTime FechaActual = DateTime.Now;
+                if (FechaActual.Month == 12 || FechaActual.Month <= 4)
                 {
-                    MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(15);
+                    if (ClienteMantenimiento.MantenimientoVerano == "Quincenal")
+                    {
+                        MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(15);
+                    }
+                    else
+                    {
+                        MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(30);
+                    }
                 }
                 else
-                {
-                    MantenimientoNuevo.FechaSiguienteChapia= MantenimientoNuevo.FechaEjecutado.AddDays(30);
-                }
-            }
-            else { //INVIERNO
+                { //INVIERNO
 
-                if (ClienteMantenimiento.MantenimientoInvierno == "Quincenal")
-                {
-                    MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(15);
-                }
-                else
-                {
-                    MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(30);
+                    if (ClienteMantenimiento.MantenimientoInvierno == "Quincenal")
+                    {
+                        MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(15);
+                    }
+                    else
+                    {
+                        MantenimientoNuevo.FechaSiguienteChapia = MantenimientoNuevo.FechaEjecutado.AddDays(30);
+                    }
                 }
             }
         }
@@ -109,10 +138,17 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                 else
                 {
                     //Llamo a las funciones para los campos AutoCalculados
-                    DiasSinChapia(MantenimientoNuevo);
-                    fechaSiguientehapia(ListaClientes, MantenimientoNuevo);
-                    CostoTotal(MantenimientoNuevo);
-                    listadeMantenimientos.Add(MantenimientoNuevo);
+                    if (ListaClientes.Count !=0)
+                    {
+                        DiasSinChapia(MantenimientoNuevo);
+                        fechaSiguientehapia(ListaClientes, MantenimientoNuevo);
+                        CostoTotal(MantenimientoNuevo);
+                        listadeMantenimientos.Add(MantenimientoNuevo);
+                    }
+                    else {
+                        ViewBag.Mensaje = "No hay cliente registrados disponibles. Por favor, cree primero el cliente.";
+                    }
+                    
                 }
                 return RedirectToAction(nameof(Index));
             }
