@@ -120,16 +120,43 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MantenimientoController/Edit/5
         public ActionResult Edit(int id)
         {
+            if (listadeMantenimientos.Any()) {
+                Mantenimiento MantenimientoAActualizar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == id);
+                return View(MantenimientoAActualizar);
+            }
             return View();
         }
 
         // POST: MantenimientoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Mantenimiento MantenimientoEditado)
         {
+            //OBTENGO LA LISTA DE CLIENTES Y EXTRAIGO EL QUE SE NECESITA
+            IList<Cliente> ListaClientes = ClienteController.listadeClientes;
             try
             {
+                if (listadeMantenimientos.Any())
+                {
+                    Mantenimiento MantenimientoAActualizar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == MantenimientoEditado.IdMantenimiento);
+                    MantenimientoAActualizar.FechaEjecutado = MantenimientoEditado.FechaEjecutado;
+                    MantenimientoAActualizar.FechaAgendado = MantenimientoEditado.FechaAgendado;
+                    MantenimientoAActualizar.m2Propiedad = MantenimientoEditado.m2Propiedad;
+                    MantenimientoAActualizar.m2CercaViva = MantenimientoEditado.m2CercaViva;
+                    MantenimientoAActualizar.EstadoMantenimiento = MantenimientoEditado.EstadoMantenimiento;
+                    MantenimientoAActualizar.TipoZacate = MantenimientoEditado.TipoZacate;
+                    MantenimientoAActualizar.ProductoAplicado = MantenimientoEditado.ProductoAplicado;
+                    MantenimientoAActualizar.TipoProductoAplicado = MantenimientoEditado.TipoProductoAplicado;
+                    MantenimientoAActualizar.CostoChapiaM2 = MantenimientoEditado.CostoChapiaM2;
+                    MantenimientoAActualizar.CostoProductoM2 = MantenimientoEditado.CostoProductoM2;
+                    //Llamo a la funciones para que recalculen estos campos nuevamente y queden actualizados
+                    DiasSinChapia(MantenimientoEditado);
+                    fechaSiguientehapia(ListaClientes, MantenimientoEditado);
+                    CostoTotal(MantenimientoEditado);
+                    MantenimientoAActualizar.DiasSinChapia = MantenimientoEditado.DiasSinChapia;
+                    MantenimientoAActualizar.FechaSiguienteChapia = MantenimientoEditado.FechaSiguienteChapia;
+                    MantenimientoAActualizar.CostoTotalMantenimiento = MantenimientoEditado.CostoTotalMantenimiento;
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
