@@ -173,16 +173,29 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // GET: MantenimientoController/Delete/5
         public ActionResult Delete(int id)
         {
+            if (listadeMantenimientos.Any())
+            {
+                Mantenimiento MantenimientoAEliminar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == id);
+                return View(MantenimientoAEliminar);
+            }
             return View();
         }
 
         // POST: MantenimientoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Mantenimiento MantenimientoEliminado)
         {
             try
             {
+                Mantenimiento MantenimientoAEliminar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == MantenimientoEliminado.IdMantenimiento);
+                if (MantenimientoAEliminar == null)
+                {
+                    return View();
+                }
+                else {
+                    listadeMantenimientos.Remove(MantenimientoAEliminar);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
