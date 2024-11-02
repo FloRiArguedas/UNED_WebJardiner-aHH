@@ -61,8 +61,9 @@
         </dd>
     </dl>
    
-    <form asp-action="Delete">
-        <input type="submit" value="ELIMINAR" class="btn btn-danger" /> |
+    <form asp-action="DeleteClient">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input name="id" type="submit" value="ELIMINAR" class="btn btn-danger" /> |
         <a asp-action="Index">Regresar</a>
     </form>
 </div>

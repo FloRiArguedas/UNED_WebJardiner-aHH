@@ -144,11 +144,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
                         fechaSiguientehapia(ListaClientes, MantenimientoNuevo);
                         CostoTotal(MantenimientoNuevo);
                         listadeMantenimientos.Add(MantenimientoNuevo);
-                    }
-                    else {
-                        ViewBag.Mensaje = "No hay cliente registrados disponibles. Por favor, cree primero el cliente.";
-                    }
-                    
+                    }                    
                 }
                 return RedirectToAction(nameof(Index));
             }

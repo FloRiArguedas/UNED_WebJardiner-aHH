@@ -1,46 +1,45 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P1_FloricelaArguedas_WebAppJHH.Models;
+using P1_FloricelaArguedas_WebAppJHH.Services;
+using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace P1_FloricelaArguedas_WebAppJHH.Controllers
 {
     public class ClienteController : Controller
     {
+
         public static IList<Cliente> listadeClientes = new List<Cliente>();
-      
-        // GET: ClienteController
-        public ActionResult Index()
+
+        //Variable Global para la interfaz de Servicio
+        private readonly IServicioCliente _iservicioCliente;
+
+        //Constructor para instanciar la variable Global
+        public ClienteController(IServicioCliente iservicioCliente)
         {
-            if (!listadeClientes.Any())
-            { 
-                Cliente cliente = new Cliente
-                {
-                    Id = 1,
-                    Nombre = "Floricela",
-                    Provincia = "Heredia",
-                    Canton = "Santo Domingo",
-                    Distrito = "Santo Domingo",
-                    DireccionExacta = "Contiguo Templo Católico",
-                    MantenimientoInvierno = "Quincenal",
-                    MantenimientoVerano = "Mensual"
-                };
-                listadeClientes.Add(cliente);
-            }
+            _iservicioCliente = iservicioCliente;
+
+        }
+
+        //MÉTODOS
+
+        // GET: ClienteController
+        public async Task<ActionResult> Index()
+        {
+            List<Cliente> listadeClientes;
+            listadeClientes = await _iservicioCliente.Index();
             return View(listadeClientes);
         }
 
-        // GET: ClienteController/Details/
-        public ActionResult Details(int id)
-        {
-            if (listadeClientes.Any())
-            {
-                Cliente clienteALeer = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
-                return View(clienteALeer);
-            }
-            return View();
-        }
 
+        // GET: ClienteController/Details/
+        public async Task<ActionResult> Details(int id)
+        {
+
+            Cliente clienteALeer = await _iservicioCliente.ObtenerCliente(id);
+            return View(clienteALeer);
+        }
 
         // GET: ClienteController/Search
         public ActionResult Search()
@@ -51,19 +50,17 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: ClienteController/Search
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Search(int id)
+        public async Task<ActionResult> Search(int id)
         {
-            if (listadeClientes.Any()) { // SI CONTIENE AL MENOS UN ELEMENTO (SI ES TRUE)
-                Cliente clienteAbuscar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
-                if (clienteAbuscar == null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                else {
-                    return View(clienteAbuscar);
-                }
+            Cliente clienteAbuscar = await _iservicioCliente.ObtenerCliente(id);
+            if (clienteAbuscar == null)
+            {
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            else
+            {
+                return View(clienteAbuscar);
+            }
         }
 
         // GET: ClienteController/Create
@@ -75,16 +72,14 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: ClienteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cliente clienteNuevo)
+        public async Task<ActionResult> Create(Cliente clienteNuevo)
         {
             try
             {
+                await _iservicioCliente.Create(clienteNuevo);
                 if (clienteNuevo == null)
                 {
                     return View();
-                }
-                else { 
-                    listadeClientes.Add (clienteNuevo);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -94,35 +89,29 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             }
         }
 
+
         // GET: ClienteController/Edit/
-        public ActionResult Edit(int id)
-        {
-            if (listadeClientes.Any()) {
-                Cliente clienteaEditar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
+        public async Task<ActionResult> Edit(int id)
+        {          
+            Cliente clienteaEditar = await _iservicioCliente.ObtenerCliente(id);
+            if (clienteaEditar == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
                 return View(clienteaEditar);
             }
-            return View();
-
         }
 
         // POST: ClienteController/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Editar(Cliente clienteEditado)
+        public async Task<ActionResult> Editar(Cliente clienteEditado)
         {
             try
             {
-                if (listadeClientes.Any())
-                {
-                    Cliente clienteaEditar = listadeClientes.FirstOrDefault(cliente => cliente.Id == clienteEditado.Id);
-                    clienteaEditar.Nombre = clienteEditado.Nombre;
-                    clienteaEditar.Provincia = clienteEditado.Provincia;
-                    clienteaEditar.Canton = clienteEditado.Canton;
-                    clienteaEditar.Distrito = clienteEditado.Distrito;
-                    clienteaEditar.DireccionExacta = clienteEditado.DireccionExacta;
-                    clienteaEditar.MantenimientoInvierno = clienteEditado.MantenimientoInvierno;
-                    clienteaEditar.MantenimientoVerano = clienteEditado.MantenimientoVerano;
-                }
+                await _iservicioCliente.Editar(clienteEditado);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -132,38 +121,36 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: ClienteController/Delete/
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (listadeClientes.Any())
+            Cliente clienteAEliminar = await _iservicioCliente.ObtenerCliente(id);
+            if (clienteAEliminar == null)
             {
-                Cliente clienteAEliminar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
                 return View(clienteAEliminar);
             }
-            return View();
         }
 
         // POST: ClienteController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Cliente clienteAEliminar)
+        public async Task<ActionResult> DeleteClient(int id)
         {
             try
             {
-                if (clienteAEliminar == null)
-                {
-                    return View();
-                }
-                else
-                {
-                    listadeClientes.Remove(clienteAEliminar);
-                }
-                return RedirectToAction(nameof(Index));
+               await _iservicioCliente.Delete(id);
+               return RedirectToAction(nameof(Index));
 
             }
             catch
             {
-                return View();
+                return View("Error al querer eliminar el cliente");
             }
         }
+
     }
 }
+
