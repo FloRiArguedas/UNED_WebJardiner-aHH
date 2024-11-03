@@ -112,7 +112,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
             var client = new HttpClient();
             client.BaseAddress = new Uri(_url);
 
-            var response = await client.DeleteAsync($"api/Cliente/delete/{id}");
+            var response = await client.DeleteAsync($"api/Cliente/Delete/{id}");
        
             if (!response.IsSuccessStatusCode)
             {

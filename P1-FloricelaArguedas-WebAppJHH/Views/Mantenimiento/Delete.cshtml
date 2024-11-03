@@ -103,9 +103,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="DeleteMantenimiento">
         <input type="submit" value="ELIMINAR" class="btn btn-danger" /> |
-        <input type="hidden" name="IdMantenimiento" value="@Model.IdMantenimiento" />
+        <input type="hidden" name="id" value="@Model.IdMantenimiento" />
         <a asp-action="Index">Regresar</a>
     </form>
 </div>

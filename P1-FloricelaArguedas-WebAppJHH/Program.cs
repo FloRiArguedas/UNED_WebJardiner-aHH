@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IServicioCliente, ServiceClient>();
 builder.Services.AddScoped<IServicioEmpleado, ServicioEmpleado>();
+builder.Services.AddScoped<IServicioMaquinaria, ServicioMaquinaria>();
+builder.Services.AddScoped<IServicioMantenimiento, ServicioMantenimiento>();
 
 
 var app = builder.Build();

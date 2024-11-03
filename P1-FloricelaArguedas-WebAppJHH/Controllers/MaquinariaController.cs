@@ -1,41 +1,36 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P1_FloricelaArguedas_WebAppJHH.Models;
+using P1_FloricelaArguedas_WebAppJHH.Services;
 
 namespace P1_FloricelaArguedas_WebAppJHH.Controllers
 {
     public class MaquinariaController : Controller
     {
-        public static IList<Maquinaria> listadeMaquinaria = new List<Maquinaria>();
+        //public static IList<Maquinaria> listadeMaquinaria = new List<Maquinaria>();
+
+        private readonly IServicioMaquinaria _iservicioMaquinaria;
+
+        public MaquinariaController(IServicioMaquinaria iservicioMaquinaria)
+        {
+            _iservicioMaquinaria = iservicioMaquinaria;
+        }
+
+        //MÉTODOS
 
         // GET: MaquinariaController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            if (!listadeMaquinaria.Any()) 
-            {
-                Maquinaria maquinaria = new Maquinaria
-                {
-                    Id = 1,
-                    Descripcion = "Chapeadora",
-                    Tipo="Corta Setos",
-                    HorasUsoActual = 8,
-                    HorasUsoMaximo = 1000,
-                    HorasMantenimiento = 100
-                };
-                listadeMaquinaria.Add(maquinaria);
-            }
+            List<Maquinaria> listadeMaquinaria;
+            listadeMaquinaria = await _iservicioMaquinaria.Index();
             return View(listadeMaquinaria);
         }
 
         // GET: MaquinariaController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            if (listadeMaquinaria.Any()) {
-                Maquinaria MaquinariaALeer = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
+                Maquinaria MaquinariaALeer = await _iservicioMaquinaria.ObtenerMaquinaria(id);
                 return View(MaquinariaALeer);
-
-            }
-            return View();
         }
 
         // GET: MaquinariaController/Search
@@ -47,21 +42,18 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: ClienteController/Search
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Search(int id)
+        public async Task<ActionResult> Search(int id)
         {
-            if (listadeMaquinaria.Any())
-            { 
-                Maquinaria MaquinariaABuscar = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
-                if (MaquinariaABuscar == null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    return View(MaquinariaABuscar);
-                }
+            Maquinaria MaquinariaABuscar = await _iservicioMaquinaria.ObtenerMaquinaria(id);
+            
+            if (MaquinariaABuscar == null)
+            {
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            else
+            {
+                return View(MaquinariaABuscar);
+            }
         }
 
 
@@ -74,17 +66,14 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: MaquinariaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Maquinaria maquinariaNueva)
+        public async Task<ActionResult> Create(Maquinaria maquinariaNueva)
         {
             try
             {
+                await _iservicioMaquinaria.Create(maquinariaNueva);
                 if (maquinariaNueva == null)
                 {
                     return View();
-                }
-                else
-                {
-                    listadeMaquinaria.Add(maquinariaNueva);
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -95,34 +84,25 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: MaquinariaController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            if (listadeMaquinaria.Any()) 
+            Maquinaria MaquinariaAEditar = await _iservicioMaquinaria.ObtenerMaquinaria(id);
+            if (MaquinariaAEditar == null) 
             {
-                Maquinaria MaquinariaEditar = listadeMaquinaria.FirstOrDefault(Maquinaria => Maquinaria.Id == id);
-                return View(MaquinariaEditar); 
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            return View(MaquinariaAEditar);
         }
 
         // POST: MaquinariaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Maquinaria MaquinariaEditada)
+        public async Task<ActionResult> Edit(Maquinaria MaquinariaEditada)
         {
             try
             {
-                if (listadeMaquinaria.Any()) 
-                {
-                    Maquinaria maquinariaAEditar = listadeMaquinaria.FirstOrDefault(maquinaria=>maquinaria.Id == MaquinariaEditada.Id);
-                    maquinariaAEditar.Descripcion = MaquinariaEditada.Descripcion;
-                    maquinariaAEditar.Tipo = MaquinariaEditada.Tipo;
-                    maquinariaAEditar.HorasUsoActual = MaquinariaEditada.HorasUsoActual;
-                    maquinariaAEditar.HorasUsoMaximo = MaquinariaEditada.HorasUsoMaximo;
-                    maquinariaAEditar.HorasMantenimiento = MaquinariaEditada.HorasMantenimiento;
-                }
+                await _iservicioMaquinaria.Editar(MaquinariaEditada);
                 return RedirectToAction(nameof(Index));
-
             }
             catch
             {
@@ -131,36 +111,29 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: MaquinariaController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            if (listadeMaquinaria.Any())
+            Maquinaria MaquinariaEliminar = await _iservicioMaquinaria.ObtenerMaquinaria(id);
+            if (MaquinariaEliminar == null)
             {
-                Maquinaria MaquinariaEliminar = listadeMaquinaria.FirstOrDefault(Maquinaria => Maquinaria.Id == id);
-                return View(MaquinariaEliminar);
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            return View(MaquinariaEliminar);
         }
 
         // POST: MaquinariaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Maquinaria MaquinariaAEliminar)
+        public async Task<ActionResult> DeleteMaquinaria(int Id)
         {
             try
             {
-                Maquinaria EliminarEstaMaquinaria = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == MaquinariaAEliminar.Id);
-                if (EliminarEstaMaquinaria == null)
-                {
-                    return View();
-                }
-                else { 
-                    listadeMaquinaria.Remove(EliminarEstaMaquinaria);
-                }
+                await _iservicioMaquinaria.Delete(Id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("Error al querer eliminar la Maquinaria");
             }
         }
     }
