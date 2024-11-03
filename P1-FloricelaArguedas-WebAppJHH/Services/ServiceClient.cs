@@ -14,7 +14,6 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
         }
 
 
-
         //MÉTODOS
 
         public async Task<List<Cliente>> Index()

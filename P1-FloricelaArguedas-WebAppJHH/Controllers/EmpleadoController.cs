@@ -1,40 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P1_FloricelaArguedas_WebAppJHH.Models;
+using P1_FloricelaArguedas_WebAppJHH.Services;
 
 namespace P1_FloricelaArguedas_WebAppJHH.Controllers
 {
     public class EmpleadoController : Controller
     {
         public static IList<Empleado> ListadeEmpleados = new List<Empleado>();
-        
+
+        //Variable Global para la interfaz de Servicio
+        private readonly IServicioEmpleado _iservicioEmpleado;
+
+        //Constructor para instanciar la variable Global
+
+        public EmpleadoController(IServicioEmpleado iservicioEmpleado) 
+        {
+            _iservicioEmpleado = iservicioEmpleado;
+        }
+
+        //MÉTODOS
 
         // GET: EmpleadoController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            if (!ListadeEmpleados.Any()) {
-
-                Empleado empleado = new Empleado() {
-                
-                    Cedula = 115420652,
-                    FechaNacimiento = new DateTime(1993, 07, 10),
-                    Lateralidad = "Zurdo",
-                    FechaIngreso = new DateTime(2015, 03, 23),
-                    SalarioxHora = 1900
-                };
-                ListadeEmpleados.Add(empleado);
-            }
+            List<Empleado> ListadeEmpleados;
+            ListadeEmpleados = await _iservicioEmpleado.Index();
             return View(ListadeEmpleados);
         }
 
         // GET: EmpleadoController/Detalles (LEER)
-        public ActionResult Details(int ced)
+        public async Task<ActionResult> Details(int ced)
         {
-            if (ListadeEmpleados.Any()) { 
-                Empleado EmpleadoALeer = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
-                return View(EmpleadoALeer);
-            }
-                return View();
+                Empleado EmpleadoALeer = await _iservicioEmpleado.ObtenerEmpleado(ced);
+                return View(EmpleadoALeer);               
         }
 
         // GET: EmpleadoController/Search (BUSCAR)
@@ -46,23 +45,21 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: EmpleadoController/Search 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Search(int cedula)
+        public async Task<ActionResult> Search(int cedula)
         {
-            try
-            {
-                if (ListadeEmpleados.Any())
-                {
-                    Empleado EmpleadoEncontrado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == cedula);
-                    return View(EmpleadoEncontrado);
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                         
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(cedula);
 
+            if (EmpleadoABuscar == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else 
+            {
+                return View(EmpleadoABuscar);
+            }
+                    
+        }
 
 
         // GET: EmpleadoController/Create
@@ -74,17 +71,15 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: EmpleadoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Empleado EmpleadoNuevo)
+        public async Task<ActionResult> Create(Empleado EmpleadoNuevo)
         {
             try
             {
-                if (EmpleadoNuevo == null)
+                await _iservicioEmpleado.Create(EmpleadoNuevo);
+                if (EmpleadoNuevo == null) 
                 {
                     return View();
-                }
-                else { 
-                    ListadeEmpleados.Add(EmpleadoNuevo);
-                }
+                } 
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -94,31 +89,28 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: EmpleadoController/Editar UPDATE
-        public ActionResult Edit(int ced)
+        public async Task<ActionResult> Edit(int ced)
         {
-            if (ListadeEmpleados.Any())
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(ced);
+
+            if (EmpleadoABuscar == null)
             {
-                Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
-                return View(EmpleadoAEditar);
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            else
+            {
+                return View(EmpleadoABuscar);
+            }
         }
 
         // POST: EmpleadoController/Editar UPDATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Empleado EmpleadoActualizado)
+        public async Task<ActionResult> Editar(Empleado EmpleadoActualizado)
         {
             try
-            {
-                if (ListadeEmpleados.Any()) { 
-                
-                    Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == EmpleadoActualizado.Cedula);
-                    EmpleadoAEditar.FechaNacimiento = EmpleadoActualizado.FechaNacimiento;
-                    EmpleadoAEditar.Lateralidad = EmpleadoActualizado.Lateralidad;
-                    EmpleadoAEditar.FechaIngreso = EmpleadoActualizado.FechaIngreso;
-                    EmpleadoAEditar.SalarioxHora = EmpleadoActualizado.SalarioxHora;
-                }
+            {  
+                await _iservicioEmpleado.Editar(EmpleadoActualizado);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -128,40 +120,33 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: EmpleadoController/Delete/
-        public ActionResult Delete(int ced)
+        public async Task<ActionResult> Delete(int ced)
         {
-            if (ListadeEmpleados.Any())
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(ced);
+
+            if (EmpleadoABuscar == null)
             {
-                Empleado EmpleadoAEliminar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == ced);
-                return View(EmpleadoAEliminar);
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            else
+            {
+                return View(EmpleadoABuscar);
+            }
         }
 
         // POST: EmpleadoController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Empleado EmpleadoEliminar)
+        public async Task<ActionResult> DeleteClient(int Cedula)
         {
             try
             {
-                Empleado EliminarEsteEmpleado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == EmpleadoEliminar.Cedula);
-
-                if (EliminarEsteEmpleado != null)
-                {
-                    ListadeEmpleados.Remove(EliminarEsteEmpleado);
-                }
-                else {
-
-                    return View();
-                }
-                
+                await _iservicioEmpleado.Delete(Cedula);
                 return RedirectToAction(nameof(Index));
-                
-                }
+            }
             catch
             {
-                return View();
+                return View("Error al querer eliminar el Empleado");
             }
         }
     }
