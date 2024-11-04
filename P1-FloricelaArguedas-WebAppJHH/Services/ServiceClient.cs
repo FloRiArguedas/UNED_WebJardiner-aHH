@@ -123,7 +123,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
 
         public async Task<List<Cliente>> GetReportWeek() 
         {
-            List<Cliente> listadeClientes = new List<Cliente>();
+            List<Cliente> listadeClientesAgendados = new List<Cliente>();
             var client = new HttpClient();
             client.BaseAddress = new Uri(_url);
             var response = await client.GetAsync("api/Cliente/ReporteSemanal");
@@ -132,9 +132,29 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
                 var resultado = JsonConvert.DeserializeObject<List<Cliente>>(json_respuesta);
-                listadeClientes = resultado;
+                listadeClientesAgendados = resultado;
             }
-            return listadeClientes;
+            return listadeClientesAgendados;
+
+        }
+
+
+        public async Task<List<Cliente>> GetReportMonth()
+        {
+            List<Cliente> listadeClientesAtrasados = new List<Cliente>();
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(_url);
+
+            var response = await client.GetAsync("api/Cliente/ReporteMesesAtrasados");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                var resultado = JsonConvert.DeserializeObject<List<Cliente>>(json_respuesta);
+                listadeClientesAtrasados = resultado;
+            }
+            return listadeClientesAtrasados;
 
         }
 

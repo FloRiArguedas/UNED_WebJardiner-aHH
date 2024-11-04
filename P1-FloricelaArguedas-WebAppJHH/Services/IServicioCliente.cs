@@ -16,6 +16,8 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
         public Task Delete(int id);
 
         public Task<List<Cliente>> GetReportWeek();
+
+        public Task<List<Cliente>> GetReportMonth();
     }
 
 }

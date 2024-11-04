@@ -26,5 +26,14 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
             return View(listadeClientes);
         }
 
+
+        // GET: ReporteMesController
+        public async Task<ActionResult> IndexMes()
+        {
+            List<Cliente> listadeClientes;
+            listadeClientes = await _iservicioCliente.GetReportMonth();
+            return View(listadeClientes);
+        }
+
     }
 }
