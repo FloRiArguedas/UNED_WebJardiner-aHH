@@ -121,5 +121,22 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
 
         }
 
+        public async Task<List<Cliente>> GetReportWeek() 
+        {
+            List<Cliente> listadeClientes = new List<Cliente>();
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(_url);
+            var response = await client.GetAsync("api/Cliente/ReporteSemanal");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                var resultado = JsonConvert.DeserializeObject<List<Cliente>>(json_respuesta);
+                listadeClientes = resultado;
+            }
+            return listadeClientes;
+
+        }
+
     }
 }

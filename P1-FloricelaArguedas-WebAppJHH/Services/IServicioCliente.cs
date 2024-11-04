@@ -14,6 +14,8 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
         public Task<Cliente> Editar(Cliente ClienteEditado);
 
         public Task Delete(int id);
+
+        public Task<List<Cliente>> GetReportWeek();
     }
 
 }
