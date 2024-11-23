@@ -4,7 +4,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Models
 {
     public class Mantenimiento
     {
-        public int IdMantenimiento { get; set; }
+        public int Id { get; set; }
 
         public  int IdCliente { get; set; }
 
@@ -36,7 +36,7 @@ namespace P1_FloricelaArguedas_WebAppJHH.Models
         public  int CostoProductoM2 { get; set; }
 
         //CAMPO AUTOCALCULADO
-        public  double CostoTotalMantenimiento { get; set; }
+        public  float CostoTotalMantenimiento { get; set; }
         
     }
 }

@@ -30,9 +30,9 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: EmpleadoController/Detalles (LEER)
-        public async Task<ActionResult> Details(int ced)
+        public async Task<ActionResult> Details(int Id)
         {
-                Empleado EmpleadoALeer = await _iservicioEmpleado.ObtenerEmpleado(ced);
+                Empleado EmpleadoALeer = await _iservicioEmpleado.ObtenerEmpleado(Id);
                 return View(EmpleadoALeer);               
         }
 
@@ -45,10 +45,10 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: EmpleadoController/Search 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Search(int cedula)
+        public async Task<ActionResult> Search(int Id)
         {
                          
-            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(cedula);
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(Id);
 
             if (EmpleadoABuscar == null)
             {
@@ -89,9 +89,9 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: EmpleadoController/Editar UPDATE
-        public async Task<ActionResult> Edit(int ced)
+        public async Task<ActionResult> Edit(int Id)
         {
-            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(ced);
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(Id);
 
             if (EmpleadoABuscar == null)
             {
@@ -120,9 +120,9 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         }
 
         // GET: EmpleadoController/Delete/
-        public async Task<ActionResult> Delete(int ced)
+        public async Task<ActionResult> Delete(int Id)
         {
-            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(ced);
+            Empleado EmpleadoABuscar = await _iservicioEmpleado.ObtenerEmpleado(Id);
 
             if (EmpleadoABuscar == null)
             {
@@ -137,11 +137,11 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: EmpleadoController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteClient(int Cedula)
+        public async Task<ActionResult> DeleteClient(int Id)
         {
             try
             {
-                await _iservicioEmpleado.Delete(Cedula);
+                await _iservicioEmpleado.Delete(Id);
                 return RedirectToAction(nameof(Index));
             }
             catch

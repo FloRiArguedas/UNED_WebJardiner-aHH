@@ -42,11 +42,11 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
         // POST: MantenimientoController/Search
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Search(int IdMantenimiento)
+        public async Task<ActionResult> Search(int Id)
         {
             try
             {
-                Mantenimiento MantenimientoEncontrado = await _iservicioMantenimiento.ObtenerMantenimiento(IdMantenimiento);
+                Mantenimiento MantenimientoEncontrado = await _iservicioMantenimiento.ObtenerMantenimiento(Id);
                     
                 if (MantenimientoEncontrado == null) 
                 {

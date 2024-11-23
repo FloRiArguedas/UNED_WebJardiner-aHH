@@ -14,7 +14,7 @@
 }
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear Nuevo Mantenimiento</a>
 </p>
 <p>
     <a asp-action="Search">Buscar Mantenimiento</a>
@@ -23,7 +23,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdMantenimiento)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdCliente)
@@ -74,7 +74,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdMantenimiento)
+                    @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdCliente)
@@ -119,9 +119,9 @@
                 @Html.DisplayFor(modelItem => item.CostoTotalMantenimiento)
             </td>
             <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.IdMantenimiento }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.IdMantenimiento }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMantenimiento })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
             </td>
         </tr>
 }
