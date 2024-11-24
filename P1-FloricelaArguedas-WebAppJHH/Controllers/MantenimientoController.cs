@@ -63,12 +63,14 @@ namespace P1_FloricelaArguedas_WebAppJHH.Controllers
 
 
         // GET: MantenimientoController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var listaIDsClientes = await _iservicioMantenimiento.ObtenerIDsClientes();
+
+            ViewBag.ListaIDs = listaIDsClientes;
             return View();
         }
 
-                 
 
         // POST: MantenimientoController/Create
         [HttpPost]

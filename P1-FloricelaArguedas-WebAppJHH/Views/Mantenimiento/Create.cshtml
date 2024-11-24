@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var listaClientesIDs = ViewBag.ListaIDs as List<int>;
 }
 
 <h1>Create</h1>
@@ -19,7 +20,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdCliente" class="control-label"></label>
-                <input asp-for="IdCliente" class="form-control" />
+                <select asp-for="IdCliente" class="form-control" id="clienteId" name="IdCliente">
+                    <option value="">Seleccione el cliente</option>
+                    @foreach (var id in listaClientesIDs)
+                    {
+                        <option value="@id">Cliente @id</option>
+                    }
+                </select>
+                @*<input asp-for="IdCliente" class="form-control" /> SE CAMBIO POR DROPDOWN*@
                 <span asp-validation-for="IdCliente" class="text-danger"></span>
             </div>
             <div class="form-group">

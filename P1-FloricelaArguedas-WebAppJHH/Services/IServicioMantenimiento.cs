@@ -9,6 +9,8 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
 
         public Task<Mantenimiento> ObtenerMantenimiento(int id);
 
+        public Task<List<int>> ObtenerIDsClientes();
+
         public Task<Mantenimiento> Create(Mantenimiento MantenimimentoNuevo);
 
         public Task<Mantenimiento> Editar(Mantenimiento MantenimientoEditado);

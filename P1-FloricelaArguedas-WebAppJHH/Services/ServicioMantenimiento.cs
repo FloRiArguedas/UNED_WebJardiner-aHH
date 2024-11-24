@@ -34,7 +34,6 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
             return ListadeMantenimientos;
         }
 
-
         public async Task<Mantenimiento> ObtenerMantenimiento(int id)
         {
             var client = new HttpClient();
@@ -53,6 +52,25 @@ namespace P1_FloricelaArguedas_WebAppJHH.Services
             {
                 return null;
             }
+        }
+
+        public async Task<List<int>> ObtenerIDsClientes()
+        {
+            List<int> listaIDsClientes = new List<int>();
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(_url);
+
+            //Envío solicitud GET a la URL en el server con el id en la URL
+            var response = await client.GetAsync($"api/Mantenimiento/Create");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                listaIDsClientes = JsonConvert.DeserializeObject<List<int>>(json_respuesta);
+            }
+
+            return listaIDsClientes;
         }
 
         public async Task<Mantenimiento> Create(Mantenimiento MantenimientoNuevo)
